@@ -21,16 +21,16 @@ create.Rgrnn <- function(set, sigma, outColumn = 1)
 	grnn <- list(
 		model	= "General regression neural network (multidimentional)",
 		sigma 	= sigma,		#vector
-		Xa = set[ ,-outColumn]
-		Ya = set[ , outColumn]
+		Xa = set[ ,-outColumn],
+		Ya = set[ , outColumn],
 		#aka Xa from grnn library
-		layer1weights = numeric() 	#dim=dim(set)-1
+		layer1weights = numeric(), 	#dim=dim(set)-1
 		#aka Ya from grnn library
 		layer2weights = numeric() 	#dim=dim(set)-1
 		)
 	#grnn$sigma <- sigma
 	#setting start weights as readme from 05/05/15
-	grnn$layer1weights = Xa
-	grnn$layer2weights = Ya
+	grnn$layer1weights = set[ ,-outColumn]
+	grnn$layer2weights = set[ , outColumn]
 	grnn
 }

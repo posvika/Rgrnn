@@ -6,7 +6,7 @@
 # posvika@gmail.com						#
 #########################################
 
-learn.Rgrnn <- function(grnn, loopAmount=1000, R2 = 0.2, sigmaSet)
+learn.Rgrnn <- function(grnn, loopAmount=1000, R2 = 0.5, sigmaSet)
 # @arguments:
 #grnn			grnn returned by Rgrnn library functions
 #set 			(optinal) data.frame or matrix, additional learn data
@@ -26,7 +26,7 @@ learn.Rgrnn <- function(grnn, loopAmount=1000, R2 = 0.2, sigmaSet)
 			{
 				grnn$sigma[i] <- sigmaCurr
 				y <-compute(grnn$layer1weights,grnn$layer2weights,grnn$Xa[testnum],grnn$sigma)
-				r2 <- c(r2, sum( (y-grnn$Ya[testnum])^2 )
+				r2 <- c(r2, sum( (y-grnn$Ya[testnum])^2 ))
 				result <- c(grnn$sigma[i], y)
 			}
 		}
@@ -44,16 +44,16 @@ learn.Rgrnn <- function(grnn, loopAmount=1000, R2 = 0.2, sigmaSet)
 compute.Rgrnn <- function(Xa, Ya, X, sigma)
 # @arguments:
 #X				input data, new instance
-#Xa				=layer1weights (previous inputs)
-#Ya				results saved in layer2weights
+#Xa				=layer1weights (input matrix)
+#Ya				=layer2weights (targets)
 #sigma 			sigma vector for hidden layer
 {
 	hidden <- numeric()
 	#get hidden layer results
 	for(i in 1:length(X))		#loop over 1 layer neurons
 	{
-		#each hidden neuron has its own sigma
-		hidden <- c(hidden,Y(Xa, Ya, X, sigma[i]))
+		#hidden - vector of hidden neurons kernel function Y()  	computation results
+		hidden <- c(hidden,Y(Xa([i,] Ya[i], X, sigma[i]))
 		result <- sum(hidden)
 		return(result)
 	}
